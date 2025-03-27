@@ -37,7 +37,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -168,7 +167,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+
 .venv
 env/
 venv/
