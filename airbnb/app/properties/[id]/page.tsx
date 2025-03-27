@@ -1,7 +1,7 @@
 import Image from "next/image";
 import ReservationSidebar from "@/app/components/properties/ReservationSidebar";
 import apiService from "@/app/services/apiService";
-import { getUserId } from "@/app/lib/action";
+import { getUserId } from "../../lib/action";
 import Link from "next/link";
 interface PropertyDetailPageProps {
   params: { id: string };
@@ -9,12 +9,25 @@ interface PropertyDetailPageProps {
 
 const PropertyDetailPage = async ({ params }: PropertyDetailPageProps) => {
   const userId = await getUserId();
-  console.log("userid", userId);
 
   const response = await apiService.get(`/api/properties/${params.id}`);
-  const property = response.data;
+  const property = await response.data;
+
+  let landlord = null;
+  if (typeof property.landlord === "string") {
+    const landlordResponse = await apiService.get(
+      `/api/landlords/${property.landlord}/`
+    );
+    landlord = landlordResponse;
+  } else {
+    landlord = property.landlord;
+  }
+
+  if (!landlord) {
+    return <div>Landlord data not found.</div>;
+  }
   if (!property) {
-    return <div>Property not found.</div>; // Add fallback for missing property
+    return <div>Property not found.</div>;
   }
   return (
     <main className="max-w-screen-xl mx-auto px-6 mb-6">
@@ -34,7 +47,7 @@ const PropertyDetailPage = async ({ params }: PropertyDetailPageProps) => {
           <h1 className="text-3xl md:text-4xl font-semibold text-gray-900">
             {property.title}
           </h1>
-          <span className="mb-4 block text-lg text-gray-600">
+          <span className="my-4 block text-lg text-gray-600">
             {property.guests} Guests - {property.bedrooms} Bedrooms -{" "}
             {property.bathrooms} Bathrooms
           </span>

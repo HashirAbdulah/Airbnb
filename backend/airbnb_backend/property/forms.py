@@ -14,16 +14,18 @@ class PropertyForm(ModelForm):
             "bedrooms",
             "bathrooms",
             "guests",
-            'country',
-            'country_code',
+            "country",
+            "country_code",
             "image",
         )
 
     def clean_image(self):
-        image = self.cleaned_data.get('image')
+        image = self.cleaned_data.get("image")
 
         # Validate the image file extension (check if it's PNG, JPG, or JPEG)
         if image:
-            if not image.name.endswith(('jpg', 'jpeg', 'png')):
-                raise ValidationError("Invalid file type. Please upload a PNG, JPG, or JPEG image.")
+            if not image.name.endswith(("jpg", "jpeg", "png")):
+                raise ValidationError(
+                    "Invalid file type. Please upload a PNG, JPG, or JPEG image."
+                )
         return image

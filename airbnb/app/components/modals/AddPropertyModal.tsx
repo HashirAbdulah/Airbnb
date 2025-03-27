@@ -39,8 +39,17 @@ const AddPropertyModal = () => {
   };
 
   const submitForm = async () => {
-    console.log("submitted");
-
+    console.log("Submitting:", {
+      dataCategory,
+      dataTitle,
+      dataDescription,
+      dataPrice,
+      dataBedrooms,
+      dataBathrooms,
+      dataGuests,
+      dataCountry,
+      dataImage,
+    });
     if (
       dataCategory &&
       dataTitle &&
@@ -63,8 +72,10 @@ const AddPropertyModal = () => {
       formData.append("country", dataCountry.label);
       formData.append("country_code", dataCountry.value);
       formData.append("image", dataImage);
+
+      // // Log FormData entries
       // for (let [key, value] of Array.from(formData.entries())) {
-      //   console.log(key, value);
+      //   console.log(`${key}: ${value instanceof File ? value.name : value}`);
       // }
 
       try {
@@ -72,25 +83,17 @@ const AddPropertyModal = () => {
           "/api/properties/create/",
           formData
         );
-
         if (response.success) {
-          console.log("SUCCESS");
+          console.log("Property created successfully");
           router.push("/");
           addPropertyModal.close();
         } else {
-          console.log('Error');
-
-          const tmpErrors: string[] = Object.values(response).map((error: any) => {
-              return error;
-          })
-
-          setErrors(tmpErrors)
-      }
+          const tmpErrors = Object.values(response).flat() as string[];
+          setErrors(tmpErrors);
+        }
       } catch (error) {
         console.error("API Error:", error);
-        alert(
-          "Something went wrong while submitting the property. Please try again."
-        );
+        alert("Submission failed. Check console for details.");
       }
     } else {
       alert("Please fill in all required fields.");

@@ -7,6 +7,7 @@ class PropertiesListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
         fields = [
+            "id",
             "category",
             "title",
             "description",
@@ -17,6 +18,7 @@ class PropertiesListSerializer(serializers.ModelSerializer):
             "country",
             "country_code",
             "image",
+            "landlord",
         ]
 
 
