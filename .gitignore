@@ -28,7 +28,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+# .env*.local
 
 # vercel
 .vercel
@@ -168,9 +168,9 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+# .env
 .venv
-env/
+# env//
 venv/
 ENV/
 env.bak/
@@ -213,5 +213,21 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-.env
 .qodo
+
+# Node.js / Next.js
+node_modules/
+.next/
+
+# Python / Django
+__pycache__/
+*.pyc
+db.sqlite3
+venv/
+
+
+# macOS
+.DS_Store
+
+# VSCode
+.vscode/
